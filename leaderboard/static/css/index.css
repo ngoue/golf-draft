@@ -1,0 +1,44 @@
+.drafter-name {
+  font-weight: 300;
+  margin-bottom: 20px;
+  margin-top: 0px;
+}
+
+.drafter > .score {
+  font-size: 2em;
+  /*font-weight: 800;*/
+}
+
+.player {
+  border-top: 1px solid #eee;
+  background-color: white;
+  margin: 0px;
+  padding: 10px;
+}
+
+.player:last-of-type {
+  opacity: .5;
+}
+
+.player img {
+  border-radius: 100%;
+}
+
+.player-name,
+.player .media-right {
+  vertical-align: middle;
+}
+
+.player .position {
+  font-size: .9em;
+  font-weight: 100;
+}
+
+.player .media-right {
+  font-weight: 100;
+  font-size: 2em;
+}
+
+.under-par {
+  color: red;
+}

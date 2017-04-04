@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}Leaderboard{% endblock %}
+
+{% block styles %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" media="screen" title="no title" charset="utf-8">
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Leaderboard</h1>
+        </div>
+    </div>
+    <div class="row">
+        {% for drafter in drafters %}
+            <div class="col-md-4 col-sm-6">
+                <div class="well drafter">
+                    <div class="col-xs-10">
+                        <h2 class="drafter-name">{{ drafter.name }}</h2>
+                    </div>
+                    <div class="score col-xs-2 {% if drafter.score < 0 %}under-par{% endif %}">
+                        {% if drafter.score == 0 %}
+                            E
+                        {% elif drafter.score < 0%}
+                            {{ drafter.score }}
+                        {% else %}
+                            +{{ drafter.score }}
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        {% for player in drafter.players %}
+                            <div class="media player col-xs-12">
+                                <div class="media-left">
+                                    <img src="http://www.usopen.com/images/players/lb/{{ player.id }}.png" alt="{{ player.first_name}} {{player.last_name}}"   height="40" width="40"/>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="player-name">{{ player.first_name}} {{player.last_name}} <span class="position">({% if player.status == "C" %}CUT{% else %}{{ player.position }}{% endif %})</span></h4>
+                                </div>
+                                <div class="media-right {% if player.to_par_i < 0 %}under-par{% endif %}">
+                                    {{ player.to_par_s }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
