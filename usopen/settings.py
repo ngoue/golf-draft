@@ -28,6 +28,7 @@ DEBUG = False
 ALLOWED_HOSTS = [
     'localhost',
     '107.170.225.169',
+    '.golf-draft.dev',
 ]
 
 
