@@ -35,7 +35,7 @@
                         {% for player in drafter.players %}
                             <div class="media player col-xs-12">
                                 <div class="media-left">
-                                    <img src="http://www.usopen.com/images/players/lb/{{ player.id }}.png" alt="{{ player.first_name}} {{player.last_name}}"   height="40" width="40"/>
+                                    <div class="profile" style="background-image:url(http://i.pgatour.com/image/upload/q_85,t_headshots_player_l/headshots_{{player.id}}.png);"></div>
                                 </div>
                                 <div class="media-body">
                                     <h4 class="player-name">{{ player.first_name}} {{player.last_name}} <span class="position">({% if player.status == "C" %}CUT{% else %}{{ player.position }}{% endif %})</span></h4>

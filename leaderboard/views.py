@@ -18,7 +18,7 @@ def index(request):
 
 
 def load_players():
-    raw_list = json.loads(requests.get('http://www.usopen.com/en_US/scores/feeds/scores.json').text)["data"]["player"]
+    raw_list = json.loads(requests.get('http://www.masters.com/en_US/scores/feeds/scores.json').text)["data"]["player"]
     players = []
     for player_data in raw_list:
         players.append(Player(player_data))
