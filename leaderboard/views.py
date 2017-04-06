@@ -40,8 +40,8 @@ class Player:
                 self.to_par_i *= 2
                 self.to_par_s = "{}{}".format('+' if self.to_par_i > 0 else '', self.to_par_i if self.to_par_i != 0 else 'E')
         except ValueError:
-            self.to_par_i = -999
+            self.to_par_i = 999
         try:
             self.total = int(data["total"]) if data["total"] != "" else 0
         except ValueError:
-            self.total = -999
+            self.total = 999
