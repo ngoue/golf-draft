@@ -28,6 +28,7 @@ DEBUG = False
 ALLOWED_HOSTS = [
     'localhost',
     '107.170.225.169',
+    'golf.jordanthomasg.com',
     '.golf-draft.dev',
 ]
 
@@ -44,13 +45,12 @@ INSTALLED_APPS = [
     'leaderboard'
 ]
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
