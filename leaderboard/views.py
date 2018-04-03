@@ -18,7 +18,7 @@ def index(request):
 
 
 def load_players():
-    raw_list = json.loads(requests.get('http://www.masters.com/en_US/scores/feeds/scores.json').text)["data"]["player"]
+    raw_list = requests.get('http://www.masters.com/en_US/scores/feeds/scores.json').json().get("data", {}).get("player", [])
     players = []
     for player_data in raw_list:
         players.append(Player(player_data))
@@ -28,6 +28,7 @@ def load_players():
 class Player:
     def __init__(self, data):
         self.id = int(data["id"])
+        self.image_id = str(self.id).zfill(5)
         self.first_name = data["first_name"]
         self.last_name = data["last_name"]
         self.position = data["pos"]
