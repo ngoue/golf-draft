@@ -6,6 +6,7 @@
 
 .drafter > .score {
   font-size: 2em;
+  text-align: right;
   /*font-weight: 800;*/
 }
 

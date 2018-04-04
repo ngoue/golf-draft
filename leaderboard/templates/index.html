@@ -19,10 +19,10 @@
         {% for drafter in drafters %}
             <div class="col-md-4 col-sm-6">
                 <div class="well drafter">
-                    <div class="col-xs-10">
+                    <div class="col-xs-8">
                         <h2 class="drafter-name">{{ drafter.name }}</h2>
                     </div>
-                    <div class="score col-xs-2 {% if drafter.score < 0 %}under-par{% endif %}">
+                    <div class="score col-xs-4 {% if drafter.score < 0 %}under-par{% endif %}">
                         {% if drafter.score == 0 %}
                             E
                         {% elif drafter.score < 0%}
