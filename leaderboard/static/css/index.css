@@ -10,6 +10,10 @@
   /*font-weight: 800;*/
 }
 
+.error::after {
+  content: "*";
+}
+
 .player {
   border-top: 1px solid #eee;
   background-color: white;

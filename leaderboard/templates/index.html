@@ -22,7 +22,7 @@
                     <div class="col-xs-8">
                         <h2 class="drafter-name">{{ drafter.name }}</h2>
                     </div>
-                    <div class="score col-xs-4 {% if drafter.score < 0 %}under-par{% endif %}">
+		    <div class="score col-xs-4 {% if drafter.score < 0 %}under-par{% endif %} {% if drafter.score_error %}error{% endif %}">
                         {% if drafter.score == 0 %}
                             E
                         {% elif drafter.score < 0%}
@@ -38,10 +38,13 @@
                                     <div class="profile" style="background-image:url(http://i.pgatour.com/image/upload/q_85,t_headshots_player_l/headshots_{{player.image_id}}.png);"></div>
                                 </div>
                                 <div class="media-body">
-                                    <h4 class="player-name">{{ player.first_name}} {{player.last_name}} <span class="position">({% if player.status == "C" %}CUT{% else %}{{ player.position }}{% endif %})</span></h4>
+                                    <h4 class="player-name {% if player.to_par_error %}error{% endif %}">
+					    {{ player.first_name}} {{player.last_name}} 
+					    <span class="position">({% if player.status == "C" %}CUT{% else %}{{ player.position | default:"TBD" }}{% endif %})</span>
+				    </h4>
                                 </div>
-                                <div class="media-right {% if player.to_par_i < 0 %}under-par{% endif %}">
-                                    {{ player.to_par_s }}
+				<div class="score media-right {% if player.to_par_i < 0 %}under-par{% endif %}">
+                                    {{ player.to_par_s | default:'E' }}
                                 </div>
                             </div>
                         {% endfor %}

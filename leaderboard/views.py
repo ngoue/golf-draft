@@ -9,10 +9,11 @@ def index(request):
 
     for d in drafters:
         d.players = filter(lambda p: p.id == d.player1 or p.id == d.player2 or p.id == d.player3, players)
-        d.players = sorted(d.players, key=lambda p: p.to_par_i)
+        d.players = sorted(d.players, key=lambda p: (p.to_par_error, not p.position, p.to_par_i))
         d.score = sum([ p.to_par_i for p in d.players[:-1] ])
+        d.score_error = bool(list(filter(lambda p: p.to_par_error, d.players[:-1])))
 
-    drafters = sorted(drafters, key=lambda d: d.score)
+    drafters = sorted(drafters, key=lambda d: (d.score_error, d.score))
 
     return render(request, 'index.html', {'drafters': drafters})
 
@@ -25,6 +26,13 @@ def load_players():
     return players
 
 
+def sort_players(players):
+    players = sorted(players, key=lambda p: p.to_par_error)
+    players = sorted(players, key=lambda p: not p.position)
+    players = sorted(players, key=lambda p: p.to_par_i)
+    return players
+
+
 class Player:
     def __init__(self, data):
         self.id = int(data["id"])
@@ -34,6 +42,8 @@ class Player:
         self.position = data["pos"]
         self.status = data["status"]
         self.to_par_s = data["topar"]
+        self.to_par_error = False
+        self.total_error = False
         try:
             self.to_par_i = int(data["topar"]) if data["topar"].upper() != "E" else 0
             # Double it if the player was cut... That way the score accounts for four rounds instead of two
@@ -41,8 +51,10 @@ class Player:
                 self.to_par_i *= 2
                 self.to_par_s = "{}{}".format('+' if self.to_par_i > 0 else '', self.to_par_i if self.to_par_i != 0 else 'E')
         except ValueError:
-            self.to_par_i = 999
+            self.to_par_i = 0
+            self.to_par_error = True
         try:
             self.total = int(data["total"]) if data["total"] != "" else 0
         except ValueError:
-            self.total = 999
+            self.total = 0
+            self.total_error = True
