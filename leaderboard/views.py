@@ -2,6 +2,10 @@ from django.shortcuts import render
 from . import models
 import requests, json
 
+URL = 'https://www.masters.com/en_US/scores/feeds/scores.json'
+USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'
+
+
 # Create your views here.
 def index(request):
     players = load_players()
@@ -12,14 +16,16 @@ def index(request):
         d.players = sorted(d.players, key=lambda p: (p.to_par_error, not p.position, p.to_par_i))
         d.score = sum([ p.to_par_i for p in d.players[:-1] ])
         d.score_error = bool(list(filter(lambda p: p.to_par_error, d.players[:-1])))
-
     drafters = sorted(drafters, key=lambda d: (d.score_error, d.score))
-
     return render(request, 'index.html', {'drafters': drafters})
 
 
 def load_players():
-    raw_list = requests.get('http://www.masters.com/en_US/scores/feeds/scores.json').json().get("data", {}).get("player", [])
+    headers = {'user-agent': USER_AGENT}
+    raw_list = requests.get(URL, headers=headers) \
+	.json() \
+	.get("data", {}) \
+	.get("player", [])
     players = []
     for player_data in raw_list:
         players.append(Player(player_data))
