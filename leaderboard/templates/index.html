@@ -35,7 +35,7 @@
                         {% for player in drafter.players %}
                             <div class="media player col-xs-12">
                                 <div class="media-left">
-                                    <div class="profile" style="background-image:url(http://i.pgatour.com/image/upload/q_85,t_headshots_player_l/headshots_{{player.image_id}}.png);"></div>
+                                    <div class="profile" style="background-image:url(https://images.masters.com/players/{{ year }}/240x240/{{ player.id }}.jpg);"></div>
                                 </div>
                                 <div class="media-body">
                                     <h4 class="player-name {% if player.to_par_error %}error{% endif %}">

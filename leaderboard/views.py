@@ -1,8 +1,10 @@
+from datetime import date
 from django.shortcuts import render
 from . import models
 import requests, json
 
-URL = 'https://www.masters.com/en_US/scores/feeds/scores.json'
+YEAR = date.today().year
+URL = 'https://www.masters.com/en_US/scores/feeds/{year}/scores.json'.format(year=YEAR)
 USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'
 
 
@@ -17,7 +19,10 @@ def index(request):
         d.score = sum([ p.to_par_i for p in d.players[:-1] ])
         d.score_error = bool(list(filter(lambda p: p.to_par_error, d.players[:-1])))
     drafters = sorted(drafters, key=lambda d: (d.score_error, d.score))
-    return render(request, 'index.html', {'drafters': drafters})
+    return render(request, 'index.html', {
+        'drafters': drafters,
+	'year': YEAR,
+    })
 
 
 def load_players():
@@ -42,7 +47,6 @@ def sort_players(players):
 class Player:
     def __init__(self, data):
         self.id = int(data["id"])
-        self.image_id = str(self.id).zfill(5)
         self.first_name = data["first_name"]
         self.last_name = data["last_name"]
         self.position = data["pos"]
